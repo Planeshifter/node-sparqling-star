@@ -2,3 +2,8 @@
 
 node-SPARQLing Star
 ===================
+
+# Introduction
+
+This package allows you to create SPARQL calls, to fetch queries and to store them
+(optionally) in a mongoDB database.
