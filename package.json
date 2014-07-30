@@ -1,0 +1,27 @@
+{
+  "name": "sparqling-star",
+  "version": "0.0.0",
+  "description": "client for creating SPARQL queries and communicating with services like DBpedia",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Planeshifter/node-sparqling-star.git"
+  },
+  "keywords": [
+    "SPARQL",
+    "RDF",
+    "semantic-web",
+    "ontology",
+    "DBpedia"
+  ],
+  "author": "Philipp Burckhardt",
+  "license": "MIT",
+  "readmeFilename": "Readme.md",
+  "gitHead": "c9ab3e2fdf4bf717ca768544f8dbd1db9e89e5b9",
+  "bugs": {
+    "url": "https://github.com/Planeshifter/node-sparqling-star/issues"
+  }
+}
