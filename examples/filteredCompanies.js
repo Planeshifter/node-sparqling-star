@@ -9,15 +9,12 @@ var company = {
 	"dbpedia-owl:numberOfEmployees" : {value: "?num", optional:false,filter:"?num > 1000"},
 };
 
-var city = {
-	"dbpedia-owl:country" : "dbpedia:United_States",
-};
 
 myquery.registerVariable("company", company)
-		.registerVariable("city", city) 
+		.filter("regex(?city, 'New')")
 		.registerPrefix("dbres","<http://dbpedia.org/resource/>")
-		.selection(["company","num"])
-		.order("ASC(?num)");
+		.selection(["company","city"])
+		.order("ASC(?city)");
 		
 console.log(myquery.sparqlQuery);
 		
