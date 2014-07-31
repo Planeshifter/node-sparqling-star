@@ -4,8 +4,6 @@ var querystring = require('querystring');
 var underscore = require('underscore');
 var util = require('util');
 
-var endpoint = "http://dbpedia.org/sparql";
-
 var sparqls = {};
 
 sparqls.QueryVariable = function(name, obj){
@@ -32,6 +30,11 @@ sparqls.Query = function(obj){
 	this.globalFilters = [];
 	this.prefixes = [];
 	this.selectors = [];
+	
+	this.__defineGetter__("sparqlQuery", function(){
+        return this.toString();
+    });
+	
 };
 
 sparqls.Query.prototype.registerVariable = function(name, obj){
@@ -110,9 +113,15 @@ sparqls.Query.prototype.getWhereString = function(){
 				a += s;				
 			}
 			else {
-				a += "?" + elem.name + " ";
-				a += key + " ";
-				a += rightObj + " .\n";
+				if(key === "type"){
+					a += "?" + elem.name + " ";
+					a += "a ";
+					a += rightObj + " .\n";
+				} else {
+					a += "?" + elem.name + " ";
+					a += key + " ";
+					a += rightObj + " .\n";
+				}
 			}
 		}
 	});
