@@ -1,6 +1,6 @@
 {
   "name": "sparqling-star",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "client for creating SPARQL queries and communicating with services like DBpedia",
   "main": "src/index.js",
   "scripts": {
