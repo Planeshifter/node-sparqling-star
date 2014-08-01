@@ -97,9 +97,19 @@ sparqls.Query.prototype.getWhereString = function(){
 			var rightObj = elem.obj[key];
 			
 			if (typeof rightObj === "object"){
-				var s = "?" + elem.name + " ";
+				
+				var s;
+				if (rightObj.literal){
+			    var lang = rightObj.language || "en";
+				s = "?" + elem.name + " ";
+				s += key + " ";
+				s += "'" + rightObj.value + "'@" + lang + " .";
+				
+				} else {
+				s = "?" + elem.name + " ";
 				s += key + " ";
 				s += rightObj.value + " .";
+				}
 				
 				if (rightObj.filter){
 					s += " FILTER ( " + rightObj.filter + " )" 
