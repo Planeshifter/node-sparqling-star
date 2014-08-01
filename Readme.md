@@ -9,7 +9,7 @@ This package allows you to create SPARQL calls via JavaScrapt object notation an
 
 ## What it is about?
 
-Using the query language SPARQL (Simple Protocol and RDF Query Language) provides methods to retrieve machine-readable data stored in RDF. RDF stands for Resource Description Framework and is a way to store data in triplets, following the syntactical structure of subject, predicate and noun. In a very practical sense, it gives an access point to semantic web technologies and databases. One of the prime examples is the DBpedia, which is the machine-readable form of Wikipedia. DBpedia allows you to understand the Wikipedia as a big, structured database from which one can extract valuable information.  
+Using the query language SPARQL (Simple Protocol and RDF Query Language) allows to retrieve machine-readable data stored in RDF. RDF stands for Resource Description Framework and is a way to store data in triplets, following the syntactical structure of subject, predicate and noun. In a very practical sense, it gives an access point to semantic web technologies and databases. One of the prime examples is the DBpedia, which is the machine-readable form of Wikipedia. DBpedia allows you to understand the Wikipedia as a big, structured database from which one can extract valuable information.  
 
 # Getting Started
 
@@ -22,7 +22,7 @@ npm install sparqling-star
 from your working directory. To require the package in a *.js file, use the usual syntax:
 
 ```
-var sparqler = require('sparqling-star')
+var sparqler = require('sparqling-star');
 ```
 
 If you are interested in using the package not only on the server, but also client-sided, you could use the *Browserify* to convert your code into one single *.js file which can easily be embedded in an html document. 
@@ -107,7 +107,7 @@ sparqler.send(myquery2, function(error, data){
 By default, all registered and other variables are returned in the result set. This corresponds to a "SELECT *" statement in SPARQL. However, you might want to reduce the returned data by specifying them explicitly. This is achieved by using the `selection` method of the query object. Assume that we only want to view the record labels of Eminems albums. We can do this by typing
 
 ``` 
-myquery2.selection("recordLabel")
+myquery2.selection("recordLabel");
 ``` 
 
 Besides passing a string, it is also possible to supply a multitude of variables arranged in a JavaScript Array. As you may notice, the returned result set contains multiple instances of the different record labels. To only retrieve these instances once, we can use a modifier.
@@ -174,7 +174,7 @@ myquery.filter("regex(?city, 'New')");
 Prefixes can be creates as follows:
 
 ```
-myquery.registerPrefix("dbres","<http://dbpedia.org/resource/>")
+myquery.registerPrefix("dbres","<http://dbpedia.org/resource/>");
 ```
 
 This important if you use to combine ontologies and query other endpoints than DBpedia. 
