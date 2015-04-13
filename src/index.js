@@ -64,12 +64,12 @@ sparqls.Query.prototype.selection = function( list ) {
 };
 
 sparqls.Query.prototype.getPrefixes = function() {
-	var c = "";
-	this.prefixes.forEach(function(elem){
-		c += "PREFIX ";
-		c += elem.name + ": ";
-		c += elem.url + "\n";
-	});
+	var c = '';
+	this.prefixes.forEach( function( elem ) {
+		c += 'PREFIX ';
+		c += elem.name + ': ';
+		c += elem.url + '\n';
+	} );
 	return c;
 };
 
@@ -93,52 +93,53 @@ sparqls.Query.prototype.filter = function( str ) {
 	return this;
 };
 
-sparqls.Query.prototype.order = function(str){
+sparqls.Query.prototype.order = function( str ) {
 	this.orderBy = str;
 	return this;
-}
+};
 
-sparqls.Query.prototype.getWhereString = function(){
-	var a = "";
-	this.variables.forEach(function(elem){
-		for (var key in elem.obj){
-			var rightObj = elem.obj[key];
+sparqls.Query.prototype.getWhereString = function() {
+	var a = '';
+	this.variables.forEach( function( elem ) {
+		for ( var key in elem.obj ) {
+			if ( elem.obj.hasOwnProperty( key ) === true ) {
+				var rightObj = elem.obj[key];
 
-			if (typeof rightObj === "object"){
+				if ( typeof rightObj === 'object' ) {
 
-				var s;
-				if (rightObj.literal){
-			    var lang = rightObj.language || "en";
-				s = "?" + elem.name + " ";
-				s += key + " ";
-				s += "'" + rightObj.value + "'@" + lang + " .";
+					var s;
+					if ( rightObj.literal ) {
+						var lang = rightObj.language || 'en';
+						s = '?' + elem.name + ' ';
+						s += key + ' ';
+						s += '\'' + rightObj.value + '\'@' + lang + ' .';
+					} else {
+						s = '?' + elem.name + ' ';
+						s += key + ' ';
+						s += rightObj.value + ' .';
+					}
 
-				} else {
-				s = "?" + elem.name + " ";
-				s += key + " ";
-				s += rightObj.value + " .";
+					if ( rightObj.filter ) {
+						s += ' FILTER ( ' + rightObj.filter + ' )';
+					}
+					s += ' \n';
+
+					if ( rightObj.optional === true ) {
+						s = 'OPTIONAL { ' + s + '}';
+					}
+
+					a += s;
 				}
-
-				if (rightObj.filter){
-					s += " FILTER ( " + rightObj.filter + " )"
-				};
-				s += " \n";
-
-				if (rightObj.optional === true){
-					s = "OPTIONAL { " + s + "}";
-				};
-
-				a += s;
-			}
-			else {
-				if(key === "type"){
-					a += "?" + elem.name + " ";
-					a += "a ";
-					a += rightObj + " .\n";
-				} else {
-					a += "?" + elem.name + " ";
-					a += key + " ";
-					a += rightObj + " .\n";
+				else {
+					if( key === 'type') {
+						a += '?' + elem.name + ' ';
+						a += 'a ';
+						a += rightObj + ' .\n';
+					} else {
+						a += '?' + elem.name + ' ';
+						a += key + ' ';
+						a += rightObj + ' .\n';
+					}
 				}
 			}
 		}
@@ -147,46 +148,58 @@ sparqls.Query.prototype.getWhereString = function(){
 	return a;
 };
 
-sparqls.Query.prototype.getGlobalFilters = function(){
-	var b = "";
-	this.globalFilters.forEach(function(elem){
-		b += "FILTER ( " + elem + " )";
-	});
+sparqls.Query.prototype.getGlobalFilters = function() {
+	var b = '';
+	this.globalFilters.forEach( function( elem ) {
+		b += 'FILTER ( ' + elem + ' )';
+	} );
 	return b;
 };
 
-sparqls.Query.prototype.getSelect = function(){
-	if (this.distinct === true && this.reduced === true){
+sparqls.Query.prototype.getSelect = function() {
+	if ( this.distinct === true && this.reduced === true ) {
 		try {
-  		throw new TypeError("Distinct and Reduced cannot be both true. Using only simple SELECT.");
+  			throw new TypeError('Distinct and Reduced cannot be both true. Using only simple SELECT.');
 		} catch (e) {
   			console.log(e.name);
   			console.log(e.message);
-  			return "SELECT ";
-			}
+  			return 'SELECT ';
+		}
 	}
 
-	var ret = "SELECT ";
-	if (this.distinct === true) ret += "DISTINCT ";
-	if (this.reduced === true) ret += "REDUCED ";
+	var ret = 'SELECT ';
+	if (this.distinct === true) {
+		ret += 'DISTINCT ';
+	}
+	if (this.reduced === true) {
+		ret += 'REDUCED ';
+	}
 	return ret;
 };
 
-sparqls.Query.prototype.toString = function(){
-	var ret = "";
+sparqls.Query.prototype.toString = function() {
+	var ret = '';
 	ret +=  this.getPrefixes();
+
 	ret += this.getSelect();
+	if ( this.selectors.length > 0 ) {
+		 ret += this.getSelectors();
+	}
+	else {
+		ret += '* ';
+	}
 
-	if (this.selectors.length > 0) ret += this.getSelectors()
-	else ret += "* ";
-
-	ret += "WHERE { \n"
+	ret += 'WHERE { \n';
 	ret += this.getWhereString();
 	ret += this.getGlobalFilters();
-	ret += "} \n";
-	if (this.orderBy !== null) ret += "ORDER BY " + this.orderBy + "\n";
-	ret += "LIMIT " + this.limit + "\n";
-	if (this.offset) { ret += "OFFSET " + this.offset };
+	ret += '} \n';
+	if ( this.orderBy !== null ) {
+		ret += 'ORDER BY ' + this.orderBy + '\n';
+	}
+	ret += 'LIMIT ' + this.limit + '\n';
+	if ( this.offset ) {
+		ret += 'OFFSET ' + this.offset;
+	}
 	return ret;
 };
 
