@@ -2,7 +2,7 @@
   "name": "sparqling-star",
   "version": "1.0.0",
   "description": "client for creating SPARQL queries and communicating with services like DBpedia",
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "./node_modules/.bin/mocha",
     "test-cov": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha --dir ./reports/coverage -- -R spec",
@@ -27,15 +27,19 @@
     "url": "https://github.com/Planeshifter/node-sparqling-star/issues"
   },
   "dependencies": {
+    "array-intersection": "^0.1.2",
+    "lodash.includes": "^4.1.0",
     "request": "^2.39.0",
-    "underscore": "^1.6.0"
+    "underscore": "^1.6.0",
+    "validate.io-object": "^1.0.4",
+    "validate.io-string": "^1.0.2"
   },
   "devDependencies": {
     "chai": "^2.2.0",
     "coveralls": "^2.11.2",
-    "istanbul": "^0.3.13",
-    "jshint": "^2.7.0",
-    "jshint-stylish": "^1.0.1",
+    "istanbul": "^0.4.2",
+    "jshint": "2.x.x",
+    "jshint-stylish": "2.x.x",
     "mocha": "^2.2.4"
   }
 }
