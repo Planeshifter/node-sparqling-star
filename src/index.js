@@ -1,8 +1,13 @@
 'use strict';
 
+// MODULES //
+
 var request = require( 'request' );
 var querystring = require( 'querystring' );
 var underscore = require( 'underscore' );
+
+
+// NAMESPACE //
 
 var sparqls = {};
 
@@ -34,8 +39,8 @@ sparqls.Query = function( obj ) {
 	this.selectors = [];
 
 	this.__defineGetter__( 'sparqlQuery', function() {
-        return this.toString();
-    } );
+		return this.toString();
+	});
 
 };
 
@@ -144,7 +149,6 @@ sparqls.Query.prototype.getWhereString = function() {
 			}
 		}
 	});
-
 	return a;
 };
 
@@ -159,11 +163,11 @@ sparqls.Query.prototype.getGlobalFilters = function() {
 sparqls.Query.prototype.getSelect = function() {
 	if ( this.distinct === true && this.reduced === true ) {
 		try {
-  			throw new TypeError('Distinct and Reduced cannot be both true. Using only simple SELECT.');
+				throw new TypeError('Distinct and Reduced cannot be both true. Using only simple SELECT.');
 		} catch (e) {
-  			console.log(e.name);
-  			console.log(e.message);
-  			return 'SELECT ';
+			console.log(e.name);
+			console.log(e.message);
+			return 'SELECT ';
 		}
 	}
 
@@ -212,22 +216,22 @@ sparqls.Client = function(endpoint){
 	var self = this;
 	this.endpoint = endpoint || 'http://dbpedia.org/sparql';
 	this.defaultParameters = {
-    	format: 'application/json',
-    	'content-type': 'application/json'
-  	};
+		'format': 'application/json',
+		'content-type': 'application/json'
+	};
 
 	this.init = function() {
 		self.requestDefaults = {
-    		url: self.endpoint,
-    		method: 'POST',
-    		encoding: 'utf8',
-    		headers: {
+			url: self.endpoint,
+			method: 'POST',
+			encoding: 'utf8',
+			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded',
 				'Accept': 'application/json'
 			}
 		};
 
-  		self.makeRequest = request.defaults(self.requestDefaults);
+		self.makeRequest = request.defaults(self.requestDefaults);
 	};
 
 	self.init();
@@ -235,16 +239,19 @@ sparqls.Client = function(endpoint){
 
 sparqls.Client.prototype.send = function( query, callback ) {
 	var requestBody = underscore.extend( this.defaultParameters, {
-      query: String(query)
-    } );
-    var opts = {
-      body: querystring.stringify(requestBody)
-    };
+		query: String(query)
+	});
+	var opts = {
+		body: querystring.stringify(requestBody)
+	};
 
 	this.makeRequest(opts, function( error, response, body ) {
 		var data = JSON.parse( body );
 		callback( error, data );
-    });
+	});
 };
+
+
+// EXPORTS //
 
 module.exports = sparqls;
