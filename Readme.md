@@ -6,15 +6,15 @@
 SPARQLing Star
 ===================
 
-> node.js client for creating SPARQL queries and communicating with services like [DBpedia][dbpedia]
+> node.js client for creating [SPARQL][sparql] queries and communicating with services like [DBpedia][dbpedia]
 
 # Introduction
 
-This package allows you to create SPARQL calls via JavaScrapt object notation and to query a SPARQL endpoint and fetch the results.
+This package allows you to create [SPARQL][sparql] calls via JavaScript object notation and to query a [SPARQL][sparql] endpoint and fetch the results.
 
 ## What it is about?
 
-Using the query language SPARQL (Simple Protocol and RDF Query Language), this module provides facilities to retrieve machine-readable data stored in RDF. RDF stands for Resource Description Framework and is a way to store data in triplets, following the syntactical structure of subject, predicate and noun. In a very practical sense, it gives an access point to semantic web technologies and databases. One of the prime examples is the [DBpedia][dbpedia], which is the machine-readable form of [Wikipedia][wikipedia]. [DBpedia][dbpedia] allows you to understand the [Wikipedia][wikipedia] as a big, structured database from which one can extract valuable information.  
+Using the query language [SPARQL][sparql] (Simple Protocol and RDF Query Language), this module provides facilities to retrieve machine-readable data stored in RDF. RDF stands for Resource Description Framework and is a way to store data in triplets, following the syntactical structure of subject, predicate and noun. In a very practical sense, it gives an access point to semantic web technologies and databases. One of the prime examples is the [DBpedia][dbpedia], which is the machine-readable form of [Wikipedia][wikipedia]. [DBpedia][dbpedia] allows you to understand the [Wikipedia][wikipedia] as a big, structured database from which one can extract valuable information.  
 
 # Getting Started
 
@@ -57,7 +57,7 @@ Then we have to register the query object in our query:
 myquery.registerVariable("album", album);
 ```
 
-Behind the scenes, this creates a valid SPARQL call. To retrieve the code, you can access the *sparqlQuery* property of the *myquery* object as in `myquery.sparqlQuery` which will print out
+Behind the scenes, this creates a valid [SPARQL][sparql] call. To retrieve the code, you can access the *sparqlQuery* property of the *myquery* object as in `myquery.sparqlQuery` which will print out
 
 ```
 SELECT * WHERE {
@@ -69,7 +69,7 @@ LIMIT 100
 
 To test the created code, you can use a web frontend of a SPARQL endpoint of [DBpedia][dbpedia] such as [Virtuoso](http://dbpedia.org/sparql).
 
-To fetch results in JSON format inside JavaScript, we have to create a client object that communicates with a SPARQL endpoint. The constructor function Client expects an optional string argument to specify the endpoint. If you do not pass an argument, it will default to *http://dbpedia.org/sparql*. Since we are fine with this in our current application, we can simply type
+To fetch results in JSON format inside JavaScript, we have to create a client object that communicates with a [SPARQL][sparql] endpoint. The constructor function Client expects an optional string argument to specify the endpoint. If you do not pass an argument, it will default to *http://dbpedia.org/sparql*. Since we are fine with this in our current application, we can simply type
 
 ```javascript
 var sparqler = new sparqls.Client();
@@ -110,7 +110,7 @@ sparqler.send(myquery2, function(error, data){
 
 ## Selection
 
-By default, all registered and other variables are returned in the result set. This corresponds to a "SELECT *" statement in SPARQL. However, you might want to reduce the returned data by specifying them explicitly. This is achieved by using the `selection` method of the query object. Assume that we only want to view the record labels of Eminems albums. We can do this by typing
+By default, all registered and other variables are returned in the result set. This corresponds to a "SELECT *" statement in [SPARQL][sparql]. However, you might want to reduce the returned data by specifying them explicitly. This is achieved by using the `selection` method of the query object. Assume that we only want to view the record labels of Eminems albums. We can do this by typing
 
 ```javascript
 myquery2.selection("recordLabel");
@@ -175,7 +175,7 @@ myquery3.order("ASC(?extendedAlbum)");
 
 ## Filters
 
-To refine your query, you can use filters. These again accept valid SPARQL filter expressions. For example, we could only retain results in which the city contains "New".
+To refine your query, you can use filters. These again accept valid [SPARQL][sparql] filter expressions. For example, we could only retain results in which the city contains "New".
 
 ```javascript
 myquery.filter("regex(?city, 'New')");
@@ -208,7 +208,7 @@ This sample code is taken from the *companies.js* file. You can find all example
 
 ## License
 
-MIT © [Philipp Burckhardt](http://www.philipp-burckhardt.com) 2014-2016
+MIT © [Philipp Burckhardt](http://www.philipp-burckhardt.com), 2014-2016
 
 [npm-url]: https://npmjs.org/package/sparqling-star
 [npm-image]: https://badge.fury.io/js/sparqling-star.svg
@@ -224,3 +224,4 @@ MIT © [Philipp Burckhardt](http://www.philipp-burckhardt.com) 2014-2016
 
 [wikipedia]: https://en.wikipedia.org/wiki/Main_Page
 [dbpedia]: http://wiki.dbpedia.org/
+[sparql]: https://en.wikipedia.org/wiki/SPARQL
