@@ -1,18 +1,27 @@
-var sparqls = require("../src/index.js");
-var util = require("util");
+'use strict';
+
+/*
+	SELECT * WHERE {
+		?album a dbo:Album .
+		?album dbo:artist dbr:Eminem .
+	}
+*/
+
+var sparqls = require( './../lib' );
+var util = require( 'util' );
 
 var myquery = new sparqls.Query();
 
-var album = { 
-  "type": "dbpedia-owl:Album",
-  "dbpedia-owl:artist" : "dbpedia:Eminem"
- };
- 
-myquery.registerVariable("album", album);
+var album = {
+	'type': 'dbo:Album',
+	'dbo:artist' : 'dbr:Eminem'
+};
 
-console.log(myquery.sparqlQuery)
+myquery.registerVariable( 'album', album );
+
+console.log( myquery.sparqlQuery );
 
 var sparqler = new sparqls.Client();
-sparqler.send(myquery, function(error, data){
-	console.log(util.inspect(data.results.bindings));
+sparqler.send( myquery, function( error, data ) {
+	console.log( util.inspect( data.results.bindings ) );
 });

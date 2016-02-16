@@ -1,21 +1,26 @@
-SELECT ?abstract
-WHERE {
-{ <http://dbpedia.org/resource/Civil_engineering> dcterms:subject ?abstract }
-}
+'use strict';
 
-var sparqls = require("../src/index.js");
-var util = require("util");
+/*
+	SELECT ?abstract
+	WHERE {
+		<http://dbpedia.org/resource/Civil_engineering> dct:subject ?abstract
+	}
+*/
+
+var sparqls = require( './../lib' );
+var util = require( 'util' );
 
 var myquery = new sparqls.Query();
 
-var album = { 
-  "type": "dbpedia-owl:Album",
-  "dbpedia-owl:artist" : "dbpedia:Eminem"
- };
- 
-myquery.registerVariable("album", album);
+var triple = {
+	'subject': '<http://dbpedia.org/resource/Civil_engineering>',
+	'predicate': 'dct:subject',
+	'object': '?abstract'
+};
+
+myquery.registerTriple( triple );
 
 var sparqler = new sparqls.Client();
-sparqler.send(myquery, function(error, data){
-	console.log(util.inspect(data.results.bindings));
+sparqler.send( myquery, function( error, data ) {
+	console.log( util.inspect( data.results.bindings ) );
 });
